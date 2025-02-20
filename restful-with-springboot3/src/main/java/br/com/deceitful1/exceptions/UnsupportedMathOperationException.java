@@ -1,4 +1,4 @@
-package br.com.deceitful1.controllers.exceptions;
+package br.com.deceitful1.exceptions;
 
 
 import org.springframework.http.HttpStatus;

@@ -1,7 +1,7 @@
-package br.com.deceitful1.controllers.exceptions.handler;
+package br.com.deceitful1.exceptions.handler;
 
-import br.com.deceitful1.controllers.exceptions.ExceptionResponse;
-import br.com.deceitful1.controllers.exceptions.UnsupportedMathOperationException;
+import br.com.deceitful1.exceptions.ExceptionResponse;
+import br.com.deceitful1.exceptions.UnsupportedMathOperationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
