@@ -1,7 +1,7 @@
 package br.com.deceitful1.exceptions.handler;
 
 import br.com.deceitful1.exceptions.ExceptionResponse;
-import br.com.deceitful1.exceptions.UnsupportedMathOperationException;
+import br.com.deceitful1.exceptions.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -28,15 +28,14 @@ public class CustomEntityResponseHandler extends ResponseEntityExceptionHandler
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ExceptionHandler(UnsupportedMathOperationException.class)
-    public final ResponseEntity<ExceptionResponse> handleBadRequestException(Exception ex, WebRequest request )
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public final ResponseEntity<ExceptionResponse> handleNotFoundExceptions(Exception ex, WebRequest request)
     {
         ExceptionResponse response = new ExceptionResponse(new Date(),
                 ex.getMessage(),
                 request.getDescription(false));
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
-
 
 
 }

@@ -4,6 +4,7 @@ import br.com.deceitful1.models.Person;
 import br.com.deceitful1.services.PersonServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public class PersonController
     private PersonServices personServices;
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Person findById(@PathVariable(value = "id") String id)
+    public Person findById(@PathVariable(value = "id") Long id)
     {
         return personServices.findById(id);
     }
@@ -38,14 +39,15 @@ public class PersonController
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public Person update(@RequestBody Person person)
     {
-       return personServices.update(person);
+        return personServices.update(person);
     }
 
     @DeleteMapping(value = "/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public void delete(@PathVariable(value = "id") String id)
+    public ResponseEntity<?> delete(@PathVariable(value = "id") Long id)
     {
         personServices.delete(id);
+        return ResponseEntity.noContent().build();
     }
 
 
