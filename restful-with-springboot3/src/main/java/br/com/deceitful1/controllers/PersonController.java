@@ -1,6 +1,7 @@
 package br.com.deceitful1.controllers;
 
-import br.com.deceitful1.models.Person;
+import br.com.deceitful1.dataDTO.version.v1.PersonDTO;
+import br.com.deceitful1.dataDTO.version.v2.PersonDTOV2;
 import br.com.deceitful1.services.PersonServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -17,13 +18,13 @@ public class PersonController
     private PersonServices personServices;
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Person findById(@PathVariable(value = "id") Long id)
+    public PersonDTO findById(@PathVariable(value = "id") Long id)
     {
         return personServices.findById(id);
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Person> findAll()
+    public List<PersonDTO> findAll()
     {
         return personServices.findAll();
     }
@@ -31,13 +32,25 @@ public class PersonController
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Person create(@RequestBody Person person)
+    public PersonDTO create(@RequestBody PersonDTO person)
     {
         return personServices.create(person);
     }
 
+
+    @PostMapping(value = "/v2", produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public PersonDTOV2 createV2(@RequestBody PersonDTOV2 person)
+    {
+        return personServices.createV2(person);
+    }
+
+
+
+
+
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public Person update(@RequestBody Person person)
+    public PersonDTO update(@RequestBody PersonDTO person)
     {
         return personServices.update(person);
     }
