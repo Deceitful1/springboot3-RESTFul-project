@@ -1,5 +1,6 @@
 package br.com.deceitful1.services;
 
+import br.com.deceitful1.controllers.PersonController;
 import br.com.deceitful1.controllers.TestLogController;
 import br.com.deceitful1.dataDTO.version.v1.PersonDTO;
 import br.com.deceitful1.dataDTO.version.v2.PersonDTOV2;
@@ -15,6 +16,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
 public class PersonServices
@@ -32,14 +36,16 @@ public class PersonServices
     public PersonDTO findById(Long id)
     {
         PersonDTO personDTO = ObjectMapper.parseObject(personRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Person not found!!")), PersonDTO.class);
-
+        addHateoasLinks(personDTO);
         return personDTO;
     }
 
     public List<PersonDTO> findAll()
     {
         logger.info("Finding all persons...");
-        return ObjectMapper.parseListObjects(personRepository.findAll(), PersonDTO.class);
+        var ent = ObjectMapper.parseListObjects(personRepository.findAll(), PersonDTO.class);
+        ent.forEach(p -> addHateoasLinks(p));
+        return ent;
     }
 
     public PersonDTO create(PersonDTO person)
@@ -47,7 +53,10 @@ public class PersonServices
         logger.info("Creating one person...");
         Person person2 = ObjectMapper.parseObject(person, Person.class);
 
-        return ObjectMapper.parseObject(personRepository.save(person2), PersonDTO.class);
+        var dto = ObjectMapper.parseObject(personRepository.save(person2), PersonDTO.class);
+
+        addHateoasLinks(dto);
+        return dto;
     }
 
     public PersonDTOV2 createV2(PersonDTOV2 person)
@@ -68,8 +77,10 @@ public class PersonServices
         person1.setAddress(person.getAddress());
         person1.setGender(person.getGender());
 
+        var dto = ObjectMapper.parseObject(personRepository.save(person1), PersonDTO.class);
 
-        return ObjectMapper.parseObject(personRepository.save(person1), PersonDTO.class);
+        addHateoasLinks(dto);
+        return dto;
     }
 
     public void delete(Long id)
@@ -78,6 +89,15 @@ public class PersonServices
         Person person = personRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Person not found! "));
         personRepository.delete(person);
 
+    }
+
+    private static void addHateoasLinks(PersonDTO personDTO)
+    {
+        personDTO.add(linkTo(methodOn(PersonController.class).findById(personDTO.getId())).withSelfRel().withType("GET"));
+        personDTO.add(linkTo(methodOn(PersonController.class).delete(personDTO.getId())).withRel("delete").withType("DELETE"));
+        personDTO.add(linkTo(methodOn(PersonController.class).findAll()).withRel("findAll").withType("GET"));
+        personDTO.add(linkTo(methodOn(PersonController.class).create(personDTO)).withRel("create").withType("POST"));
+        personDTO.add(linkTo(methodOn(PersonController.class).update(personDTO)).withRel("update").withType("PUT"));
     }
 
 

@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: br.com.deceitful1.restfulwithspringboot3.RestfulWithSpringboot3ApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 9.260 s -- in br.com.deceitful1.restfulwithspringboot3.RestfulWithSpringboot3ApplicationTests

@@ -1,0 +1,13 @@
+br\com\deceitful1\exceptions\handler\CustomEntityResponseHandler.class
+br\com\deceitful1\dataDTO\version\v1\PersonDTO.class
+br\com\deceitful1\controllers\PersonController.class
+br\com\deceitful1\restfulwithspringboot3\RestfulWithSpringboot3Application.class
+br\com\deceitful1\services\PersonServices.class
+br\com\deceitful1\mapper\ObjectMapper.class
+br\com\deceitful1\mapper\custom\PersonMapper.class
+br\com\deceitful1\dataDTO\version\v2\PersonDTOV2.class
+br\com\deceitful1\exceptions\ExceptionResponse.class
+br\com\deceitful1\repositories\PersonRepository.class
+br\com\deceitful1\controllers\TestLogController.class
+br\com\deceitful1\models\Person.class
+br\com\deceitful1\exceptions\ResourceNotFoundException.class

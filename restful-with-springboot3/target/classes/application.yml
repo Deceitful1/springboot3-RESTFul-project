@@ -3,13 +3,13 @@ spring:
     name: springboot3-restful-project
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/restful_with_springboot?useTimezone=true&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/restful_with_springboot-project?useTimezone=true&serverTimezone=UTC
     username: root
     password: amoraiany123
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     properties:
       hibernate:
     show-sql: false

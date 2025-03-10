@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping( "/test")
+@RequestMapping( "/api/test/v1")
 public class TestLogController
 {
     private Logger logger = LoggerFactory.getLogger(TestLogController.class.getName());
