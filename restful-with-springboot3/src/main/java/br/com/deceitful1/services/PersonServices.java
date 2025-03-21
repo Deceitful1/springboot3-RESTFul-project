@@ -4,6 +4,7 @@ import br.com.deceitful1.controllers.PersonController;
 import br.com.deceitful1.controllers.TestLogController;
 import br.com.deceitful1.dataDTO.version.v1.PersonDTO;
 import br.com.deceitful1.dataDTO.version.v2.PersonDTOV2;
+import br.com.deceitful1.exceptions.RequiredObjectIsNullException;
 import br.com.deceitful1.exceptions.ResourceNotFoundException;
 import br.com.deceitful1.mapper.ObjectMapper;
 import br.com.deceitful1.mapper.custom.PersonMapper;
@@ -50,8 +51,9 @@ public class PersonServices
 
     public PersonDTO create(PersonDTO person)
     {
+        if (person == null) throw new RequiredObjectIsNullException();
         logger.info("Creating one person...");
-        Person person2 = ObjectMapper.parseObject(person, Person.class);
+        Person   person2 = ObjectMapper.parseObject(person, Person.class);
 
         var dto = ObjectMapper.parseObject(personRepository.save(person2), PersonDTO.class);
 
@@ -69,6 +71,7 @@ public class PersonServices
 
     public PersonDTO update(PersonDTO person)
     {
+        if (person == null) throw new RequiredObjectIsNullException();
         logger.info("Updating one person...");
         Person person1 = personRepository.findById(person.getId()).orElseThrow(() -> new ResourceNotFoundException("Person not found"));
 

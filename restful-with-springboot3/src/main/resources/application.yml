@@ -17,7 +17,11 @@ spring:
 
 logging:
   level:
-  # br.com.deceitful1: warn
+    # br.com.deceitful1: warn
     root: warn
 
+springdoc:
+  paths-to-match: /api/**/**
+  swagger-ui:
+    use-root-path: true
 
