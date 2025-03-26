@@ -1,4 +1,6 @@
 spring:
+  jackson:
+
   application:
     name: springboot3-restful-project
   datasource:

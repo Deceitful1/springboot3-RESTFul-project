@@ -18,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/person")
-@Tag(name = "People",description = "Endpoints for managing people. ")
+@Tag(name = "People", description = "Endpoints for managing people. ")
 public class PersonController
 {
     @Autowired
@@ -41,7 +41,7 @@ public class PersonController
     })
     public PersonDTO findById(@PathVariable(value = "id") Long id)
     {
-       return personServices.findById(id);
+        return personServices.findById(id);
     }
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, "application/x-yaml"}
@@ -63,9 +63,6 @@ public class PersonController
     {
         return personServices.findAll();
     }
-
-
-
 
 
     @Operation(summary = "Create Person",
@@ -99,8 +96,6 @@ public class PersonController
     }
 
 
-
-
     @Operation(summary = "Update Person",
             description = "Updates an existing instance of Person from the request body", tags = {"People"}, responses = {
             @ApiResponse(description = "Success",
@@ -123,9 +118,6 @@ public class PersonController
     }
 
 
-
-
-
     @Operation(summary = "Delete Person",
             description = "Deletes an existing person in the database using an ID as argument", tags = {"People"}, responses = {
             @ApiResponse(description = "Success",
@@ -145,6 +137,5 @@ public class PersonController
         personServices.delete(id);
         return ResponseEntity.noContent().build();
     }
-
 
 }

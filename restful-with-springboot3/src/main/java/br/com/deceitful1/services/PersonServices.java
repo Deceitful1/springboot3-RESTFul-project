@@ -37,6 +37,7 @@ public class PersonServices
     public PersonDTO findById(Long id)
     {
         PersonDTO personDTO = ObjectMapper.parseObject(personRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Person not found!!")), PersonDTO.class);
+        personDTO.add(linkTo(methodOn(PersonController.class).findById(id)).withSelfRel().withType("GET"));
         addHateoasLinks(personDTO);
         return personDTO;
     }
@@ -45,6 +46,7 @@ public class PersonServices
     {
         logger.info("Finding all persons...");
         var ent = ObjectMapper.parseListObjects(personRepository.findAll(), PersonDTO.class);
+        ent.forEach(p -> p.add(linkTo(methodOn(PersonController.class).findAll()).withSelfRel().withType("GET")));
         ent.forEach(p -> addHateoasLinks(p));
         return ent;
     }
@@ -57,6 +59,7 @@ public class PersonServices
 
         var dto = ObjectMapper.parseObject(personRepository.save(person2), PersonDTO.class);
 
+        dto.add(linkTo(methodOn(PersonController.class).create(dto)).withSelfRel().withType("POST"));
         addHateoasLinks(dto);
         return dto;
     }
@@ -82,6 +85,7 @@ public class PersonServices
 
         var dto = ObjectMapper.parseObject(personRepository.save(person1), PersonDTO.class);
 
+        dto.add(linkTo(methodOn(PersonController.class).update(dto)).withSelfRel().withType("PUT"));
         addHateoasLinks(dto);
         return dto;
     }
@@ -96,7 +100,7 @@ public class PersonServices
 
     private static void addHateoasLinks(PersonDTO personDTO)
     {
-        personDTO.add(linkTo(methodOn(PersonController.class).findById(personDTO.getId())).withSelfRel().withType("GET"));
+        personDTO.add(linkTo(methodOn(PersonController.class).findById(personDTO.getId())).withRel("findById").withType("GET"));
         personDTO.add(linkTo(methodOn(PersonController.class).delete(personDTO.getId())).withRel("delete").withType("DELETE"));
         personDTO.add(linkTo(methodOn(PersonController.class).findAll()).withRel("findAll").withType("GET"));
         personDTO.add(linkTo(methodOn(PersonController.class).create(personDTO)).withRel("create").withType("POST"));
